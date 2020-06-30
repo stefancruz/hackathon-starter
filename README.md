@@ -144,12 +144,6 @@ You must start ngrok after starting the project.
 
 Next, you must use the https URL defined by ngrok, for example, `https://hackaton.ngrok.io`
 
-**Note:** I highly recommend installing [Nodemon](https://github.com/remy/nodemon).
-It watches for any changes in your  node.js app and automatically restarts the
-server. Once installed, instead of `node app.js` use `nodemon app.js`. It will
-save you a lot of time in the long run, because you won't need to manually
-restart the server each time you make a small change in code. To install, run
-`sudo npm install -g nodemon`.
 
 Obtaining API Keys
 ------------------
@@ -512,7 +506,6 @@ Recommended Design Resources
 Recommended Node.js Libraries
 -----------------------------
 
-- [Nodemon](https://github.com/remy/nodemon) - Automatically restart Node.js server on code changes.
 - [geoip-lite](https://github.com/bluesmoon/node-geoip) - Geolocation coordinates from IP address.
 - [Filesize.js](http://filesizejs.com/) - Pretty file sizes, e.g. `filesize(265318); // "265.32 kB"`.
 - [Numeral.js](http://numeraljs.com) - Library for formatting and manipulating numbers.
