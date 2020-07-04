@@ -20,7 +20,7 @@ exports.getLogin = (req, res) => {
   }
   res.render('account/login', {
     title: 'Login',
-    coreFeaturesEnabled:  features.coreFeaturesEnabled
+    coreFeaturesEnabled: features.coreFeaturesEnabled
   });
 };
 
@@ -75,7 +75,8 @@ exports.getSignup = (req, res) => {
     return res.redirect('/');
   }
   res.render('account/signup', {
-    title: 'Create Account'
+    title: 'Create Account',
+    coreFeaturesEnabled: features.coreFeaturesEnabled
   });
 };
 
@@ -97,13 +98,16 @@ exports.postSignup = (req, res, next) => {
 
   const user = new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    profile: {
+      username: req.body.username
+    }
   });
 
-  User.findOne({ email: req.body.email }, (err, existingUser) => {
+  User.findOne({ '$or': [{ email: req.body.email }, { 'profile.username': req.body.username }] }, (err, existingUser) => {
     if (err) { return next(err); }
     if (existingUser) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
+      req.flash('errors', { msg: 'Username or email address are not available' });
       return res.redirect('/signup');
     }
     user.save((err) => {
@@ -125,7 +129,7 @@ exports.postSignup = (req, res, next) => {
 exports.getAccount = (req, res) => {
   res.render('account/profile', {
     title: 'Account Management',
-    coreFeaturesEnabled:  features.coreFeaturesEnabled
+    coreFeaturesEnabled: features.coreFeaturesEnabled
   });
 };
 
@@ -151,6 +155,8 @@ exports.postUpdateProfile = (req, res, next) => {
     user.profile.gender = req.body.gender || '';
     user.profile.location = req.body.location || '';
     user.profile.website = req.body.website || '';
+    user.profile.biography = req.body.biography || '';
+    user.profile.username = req.body.username;
     user.save((err) => {
       if (err) {
         if (err.code === 11000) {

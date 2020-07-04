@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .form-group
+  .row
+    .col-md-4
+      img(src=profile.image, class='profile', width='200', height='200')
+
+  .row
+    .col-md-4
+      h2 #{profile.name}
+      p #{profile.username}
+      
+      if profile.biography
+        pre #{profile.biography}
+      
+      
+      if profile.location
+        p #{profile.location}
+
+      if profile.website
+        a(href="//"+profile.website, target="_blank") #{profile.website}

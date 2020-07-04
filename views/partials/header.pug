@@ -33,6 +33,8 @@
               span= user.profile.name || user.email || user.id
               i.caret
             div.dropdown-menu
+              if (coreFeaturesEnabled && coreFeaturesEnabled.ProfilePage)
+                a.dropdown-item(href='/' + user.profile.username) Profile
               a.dropdown-item(href='/account') My Account
               div.dropdown-divider
               a.dropdown-item(href='/logout') Logout

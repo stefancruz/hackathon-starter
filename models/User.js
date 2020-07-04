@@ -27,7 +27,21 @@ const userSchema = new mongoose.Schema({
     gender: String,
     location: String,
     website: String,
-    picture: String
+    picture: String,
+    biography: String,
+    username: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    visibility: {
+      type: String,
+      enum: [
+        'public',
+        'internal',
+        'private'],
+      default: 'public'
+    },
   }
 }, { timestamps: true });
 

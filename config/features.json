@@ -29,6 +29,13 @@
         ]
     },
     {
+        "id": "ProfilePage",
+        "enabled": false,
+        "routes": [
+            "/:id"
+        ]
+    },
+    {
         "id": "StatusPageOnFrontend",
         "enabled": false
     },

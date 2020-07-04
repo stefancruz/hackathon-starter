@@ -22,6 +22,16 @@ block content
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
       .col-md-7
         input.form-control(type='text', name='name', id='name', value=user.profile.name, autocomplete='name')
+    
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='biography') Biography
+      .col-md-7
+        textarea.form-control(type='text', name='biography', id='biography', value=user.profile.biography, autocomplete='biography') #{user.profile.biography}
+
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='username') Username
+      .col-md-7
+        input.form-control(type='text', name='username', id='username', value=user.profile.username, autocomplete='username')
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right Gender
       .col-sm-6
@@ -43,7 +53,7 @@ block content
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
       .col-md-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website, autocomplete='url')
+        input.form-control(type='text', placeholder="https://example.com", name='website', id='website', value=user.profile.website, autocomplete='url')
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right Gravatar
       .col-sm-4
