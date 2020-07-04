@@ -2,153 +2,180 @@ extends ../layout
 
 block content
   .pb-2.mt-2.mb-4.border-bottom
-    h3 Profile Information
+    h3 Account
 
-  form(action='/account/profile', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
-      .col-md-7
-        input.form-control(type='email', name='email', id='email', value=user.email, autocomplete='email', required)
-      .offset-sm-3.col-md-7.pl-3
-        if user.emailVerified
-          .text-success.font-italic
-            | Verified
-        else
-          .text-danger.font-italic
-            | Unverified: &nbsp;
-            a(href='/account/verify') Send verification email
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
-      .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name, autocomplete='name')
-    
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='biography') Biography
-      .col-md-7
-        textarea.form-control(type='text', name='biography', id='biography', value=user.profile.biography, autocomplete='biography') #{user.profile.biography}
 
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='username') Username
-      .col-md-7
-        input.form-control(type='text', name='username', id='username', value=user.profile.username, autocomplete='username')
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right Gender
-      .col-sm-6
-        .form-check.form-check-inline
-          input(type='radio', class='form-check-input' checked=user.profile.gender == 'male', name='gender', value='male', data-toggle='radio')
-          label.form-check-label Male
+      <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="security-tab" data-toggle="tab" href="#security" role="tab" aria-controls="security" aria-selected="false">Security</a>
+      </li>
+      if coreFeaturesEnabled.SocialAuthentication
+        <li class="nav-item">
+          <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">Social Accounts</a>
+        </li>
+      <li class="nav-item">
+        <a class="nav-link" id="danger-tab" data-toggle="tab" href="#danger" role="tab" aria-controls="danger" aria-selected="false">Danger Zone</a>
+      </li>
+    </ul>
 
-        .form-check.form-check-inline
-          input(type='radio', class='form-check-input' checked=user.profile.gender == 'female', name='gender', value='female', data-toggle='radio')
-          label.form-check-label Female
+    <!-- Tab panes -->
+    div.tab-content
 
-        .form-check.form-check-inline
-          input(type='radio', class='form-check-input' checked=user.profile.gender == 'other', name='gender', value='other', data-toggle='radio')
-          label.form-check-label Other
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
-      .col-md-7
-        input.form-control(type='text', name='location', id='location', value=user.profile.location, autocomplete)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
-      .col-md-7
-        input.form-control(type='text', placeholder="https://example.com", name='website', id='website', value=user.profile.website, autocomplete='url')
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right Gravatar
-      .col-sm-4
-        img(src=user.gravatar(), class='profile', width='100', height='100')
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        button.btn.btn.btn-primary(type='submit')
-          i.fas.fa-pencil-alt.fa-sm
-          | Update Profile
+      div.tab-pane.active(id="profile", role="tabpanel", aria-labelledby="profile-tab")
+        .pb-2.mt-2.mb-4.border-bottom
+        h5 Profile
+        form.mt-2(action='/account/profile', method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
+            .col-md-7
+              input.form-control(type='email', name='email', id='email', value=user.email, autocomplete='email', required)
+            .offset-sm-3.col-md-7.pl-3
+              if user.emailVerified
+                .text-success.font-italic
+                  | Verified
+              else
+                .text-danger.font-italic
+                  | Unverified: &nbsp;
+                  a(href='/account/verify') Send verification email
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
+            .col-md-7
+              input.form-control(type='text', name='name', id='name', value=user.profile.name, autocomplete='name')
+          
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='biography') Biography
+            .col-md-7
+              textarea.form-control(type='text', name='biography', id='biography', value=user.profile.biography, autocomplete='biography') #{user.profile.biography}
 
-  .pb-2.mt-2.mb-4.border-bottom
-    h3 Change Password
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='username') Username
+            .col-md-7
+              input.form-control(type='text', name='username', id='username', value=user.profile.username, autocomplete='username')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right Gender
+            .col-sm-6
+              .form-check.form-check-inline
+                input(type='radio', class='form-check-input' checked=user.profile.gender == 'male', name='gender', value='male', data-toggle='radio')
+                label.form-check-label Male
 
-  form(action='/account/password', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='currentPassword') Current Password
-      .col-md-7
-        input.form-control(type='password', name='currentPassword', id='currentPassword', autocomplete='currentPassword', minlength='8', required)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') New Password
-      .col-md-7
-        input.form-control(type='password', name='password', id='password', autocomplete='new-password', minlength='8', required)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='confirmPassword') Confirm Password
-      .col-md-7
-        input.form-control(type='password', name='confirmPassword', id='confirmPassword', autocomplete='new-password', minlength='8', required)
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        button.btn.btn-primary(type='submit')
-          i.fas.fa-lock.fa-sm
-          | Change Password
+              .form-check.form-check-inline
+                input(type='radio', class='form-check-input' checked=user.profile.gender == 'female', name='gender', value='female', data-toggle='radio')
+                label.form-check-label Female
 
-  .pb-2.mt-2.mb-4.border-bottom
-    h3 Delete Account
+              .form-check.form-check-inline
+                input(type='radio', class='form-check-input' checked=user.profile.gender == 'other', name='gender', value='other', data-toggle='radio')
+                label.form-check-label Other
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
+            .col-md-7
+              input.form-control(type='text', name='location', id='location', value=user.profile.location, autocomplete)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
+            .col-md-7
+              input.form-control(type='text', placeholder="https://example.com", name='website', id='website', value=user.profile.website, autocomplete='url')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right Gravatar
+            .col-sm-4
+              img(src=user.gravatar(), class='profile', width='100', height='100')
+          .form-group
+            .offset-sm-3.col-md-7.pl-2
+              button.btn.btn.btn-primary(type='submit')
+                i.fas.fa-pencil-alt.fa-sm
+                | Update Profile                
+      
+      div.tab-pane(id="security", role="tabpanel", aria-labelledby="security-tab")
+        .pb-2.mt-2.mb-4.border-bottom
+        h5 Change Password
 
-  form(action='/account/delete', method='POST', onsubmit="return confirm('Are you sure you want to delete your account?');")
-    .form-group
-      p.offset-sm-3.col-md-7.pl-2 You can delete your account, but keep in mind this action is irreversible.
-      input(type='hidden', name='_csrf', value=_csrf)
-      .offset-sm-3.col-md-7.pl-2
-        button.btn.btn-danger(type='submit')
-          i.fas.fa-trash-alt.fa-sm
-          | Delete my account
+        form(action='/account/password', method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='currentPassword') Current Password
+            .col-md-7
+              input.form-control(type='password', name='currentPassword', id='currentPassword', autocomplete='currentPassword', minlength='8', required)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') New Password
+            .col-md-7
+              input.form-control(type='password', name='password', id='password', autocomplete='new-password', minlength='8', required)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='confirmPassword') Confirm Password
+            .col-md-7
+              input.form-control(type='password', name='confirmPassword', id='confirmPassword', autocomplete='new-password', minlength='8', required)
+          .form-group
+            .offset-sm-3.col-md-7.pl-2
+              button.btn.btn-primary(type='submit')
+                i.fas.fa-lock.fa-sm
+                | Change Password
 
-  if coreFeaturesEnabled.SocialAuthentication
-    .pb-2.mt-2.mb-4.border-bottom
-      h3 Linked Accounts
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        if user.instagram
-          p.mb-1: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
-        else
-          p.mb-1: a(href='/auth/instagram') Link your Instagram account
-      .offset-sm-3.col-md-7.pl-2
-        if user.google
-          p.mb-1: a.text-danger(href='/account/unlink/google') Unlink your Google account
-        else
-          p.mb-1: a(href='/auth/google') Link your Google account
-      .offset-sm-3.col-md-7.pl-2
-        if user.facebook
-          p.mb-1: a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
-        else
-          p.mb-1: a(href='/auth/facebook') Link your Facebook account
-        if user.snapchat
-          p.mb-1: a.text-danger(href='/account/unlink/snapchat') Unlink your Snapchat account
-        else
-          p.mb-1: a(href='/auth/snapchat') Link your Snapchat account
-      .offset-sm-3.col-md-7.pl-2
-        if user.twitter
-          p.mb-1: a.text-danger(href='/account/unlink/twitter') Unlink your Twitter account
-        else
-          p.mb-1: a(href='/auth/twitter') Link your Twitter account
-      .offset-sm-3.col-md-7.pl-2
-        if user.github
-          p.mb-1: a.text-danger(href='/account/unlink/github') Unlink your GitHub account
-        else
-          p.mb-1: a(href='/auth/github') Link your GitHub account
-      .offset-sm-3.col-md-7.pl-2
-        if user.linkedin
-          p.mb-1: a.text-danger(href='/account/unlink/linkedin') Unlink your LinkedIn account
-        else
-          p.mb-1: a(href='/auth/linkedin') Link your LinkedIn account
-      .offset-sm-3.col-md-7.pl-2
-        if user.steam
-          p.mb-1: a.text-danger(href='/account/unlink/steam') Unlink your Steam account
-        else
-          p.mb-1: a(href='/auth/steam') Link your Steam account
-      .offset-sm-3.col-md-7.pl-2
-        if user.twitch
-          p.mb-1: a.text-danger(href='/account/unlink/twitch') Unlink your Twitch account
-        else
-          p.mb-1: a(href='/auth/twitch') Link your Twitch account
-      .offset-sm-3.col-md-7.pl-2
-        if user.quickbooks
-          p.mb-1: a.text-danger(href='/account/unlink/quickbooks') Unlink your QuickBooks account
-        else
-          p.mb-1: a(href='/auth/quickbooks') Link your QuickBooks account
+      div.tab-pane(id="danger", role="tabpanel", aria-labelledby="danger-tab")
+        .pb-2.mt-2.mb-4.border-bottom
+        h5 Delete Account
+
+        form(action='/account/delete', method='POST', onsubmit="return confirm('Are you sure you want to delete your account?');")
+          .form-group
+            p.offset-sm-3.col-md-7.pl-2 You can delete your account, but keep in mind this action is irreversible.
+            input(type='hidden', name='_csrf', value=_csrf)
+            .offset-sm-3.col-md-7.pl-2
+              button.btn.btn-danger(type='submit')
+                i.fas.fa-trash-alt.fa-sm
+                | Delete my account
+
+      if coreFeaturesEnabled.SocialAuthentication
+        div.tab-pane(id="social", role="tabpanel", aria-labelledby="social-tab")
+          .pb-2.mt-2.mb-4.border-bottom
+          h5 Linked Accounts
+          .form-group
+            .offset-sm-3.col-md-7.pl-2
+              if user.instagram
+                p.mb-1: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
+              else
+                p.mb-1: a(href='/auth/instagram') Link your Instagram account
+            .offset-sm-3.col-md-7.pl-2
+              if user.google
+                p.mb-1: a.text-danger(href='/account/unlink/google') Unlink your Google account
+              else
+                p.mb-1: a(href='/auth/google') Link your Google account
+            .offset-sm-3.col-md-7.pl-2
+              if user.facebook
+                p.mb-1: a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
+              else
+                p.mb-1: a(href='/auth/facebook') Link your Facebook account
+              if user.snapchat
+                p.mb-1: a.text-danger(href='/account/unlink/snapchat') Unlink your Snapchat account
+              else
+                p.mb-1: a(href='/auth/snapchat') Link your Snapchat account
+            .offset-sm-3.col-md-7.pl-2
+              if user.twitter
+                p.mb-1: a.text-danger(href='/account/unlink/twitter') Unlink your Twitter account
+              else
+                p.mb-1: a(href='/auth/twitter') Link your Twitter account
+            .offset-sm-3.col-md-7.pl-2
+              if user.github
+                p.mb-1: a.text-danger(href='/account/unlink/github') Unlink your GitHub account
+              else
+                p.mb-1: a(href='/auth/github') Link your GitHub account
+            .offset-sm-3.col-md-7.pl-2
+              if user.linkedin
+                p.mb-1: a.text-danger(href='/account/unlink/linkedin') Unlink your LinkedIn account
+              else
+                p.mb-1: a(href='/auth/linkedin') Link your LinkedIn account
+            .offset-sm-3.col-md-7.pl-2
+              if user.steam
+                p.mb-1: a.text-danger(href='/account/unlink/steam') Unlink your Steam account
+              else
+                p.mb-1: a(href='/auth/steam') Link your Steam account
+            .offset-sm-3.col-md-7.pl-2
+              if user.twitch
+                p.mb-1: a.text-danger(href='/account/unlink/twitch') Unlink your Twitch account
+              else
+                p.mb-1: a(href='/auth/twitch') Link your Twitch account
+            .offset-sm-3.col-md-7.pl-2
+              if user.quickbooks
+                p.mb-1: a.text-danger(href='/account/unlink/quickbooks') Unlink your QuickBooks account
+              else
+                p.mb-1: a(href='/auth/quickbooks') Link your QuickBooks account
