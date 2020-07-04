@@ -1,5 +1,6 @@
 const validator = require('validator');
 const nodemailer = require('nodemailer');
+const features = require('../core/features');
 
 /**
  * GET /contact
@@ -11,6 +12,7 @@ exports.getContact = (req, res) => {
   res.render('contact', {
     title: 'Contact',
     unknownUser,
+    coreFeaturesEnabled:  features.coreFeaturesEnabled
   });
 };
 

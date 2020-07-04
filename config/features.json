@@ -3,5 +3,37 @@
         "id": "SocialAuthentication",
         "name": "Social Authentication",
         "enabled": false
+    },
+    {
+        "id": "ContactPage",
+        "name": "Contact Page",
+        "enabled": false,
+        "routes": [
+            "/contact"
+        ]
+    },
+    {
+        "id": "SignUpPage",
+        "name": "Allow Sign Up",
+        "enabled": false,
+        "routes": [
+            "/signup"
+        ]
+    },
+    {
+        "id": "BasicAuthentication",
+        "name": "Allow login using basic authentication",
+        "enabled": true,
+        "routes": [
+            "/login"
+        ]
+    },
+    {
+        "id": "StatusPageOnFrontend",
+        "enabled": false
+    },
+    {
+        "id": "StatusPage",
+        "enabled": false
     }
 ]

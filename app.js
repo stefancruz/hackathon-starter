@@ -20,6 +20,7 @@ const sass = require('node-sass-middleware');
 const multer = require('multer');
 
 const features = require('./core/features');
+const featuresEnabledMiddleware = require('./core/featuresEnabledMiddleware');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -66,7 +67,11 @@ app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(expressStatusMonitor());
+
+if (features.coreFeaturesEnabled.StatusPage) {
+  app.use(expressStatusMonitor());
+}
+
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
@@ -128,17 +133,27 @@ app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawes
  * Primary app routes.
  */
 app.get('/', homeController.index);
+
 app.get('/login', userController.getLogin);
-app.post('/login', userController.postLogin);
+
+if (features.coreFeaturesEnabled.BasicAuthentication) {
+  app.post('/login', featuresEnabledMiddleware.isEnabled, userController.postLogin);
+}
+
+//TODO: other login strategies
+
 app.get('/logout', userController.logout);
 app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
-app.get('/signup', userController.getSignup);
-app.post('/signup', userController.postSignup);
-app.get('/contact', contactController.getContact);
-app.post('/contact', contactController.postContact);
+
+app.get('/signup', featuresEnabledMiddleware.isEnabled, userController.getSignup);
+app.post('/signup', featuresEnabledMiddleware.isEnabled, userController.postSignup);
+
+app.get('/contact', featuresEnabledMiddleware.isEnabled, contactController.getContact);
+app.post('/contact', featuresEnabledMiddleware.isEnabled, contactController.postContact);
+
 app.get('/account/verify', passportConfig.isAuthenticated, userController.getVerifyEmail);
 app.get('/account/verify/:token', passportConfig.isAuthenticated, userController.getVerifyEmailToken);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
