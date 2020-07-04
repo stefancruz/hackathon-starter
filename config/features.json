@@ -1,0 +1,7 @@
+[
+    {
+        "id": "SocialAuthentication",
+        "name": "Social Authentication",
+        "enabled": false
+    }
+]

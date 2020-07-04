@@ -6,6 +6,7 @@ const _ = require('lodash');
 const validator = require('validator');
 const mailChecker = require('mailchecker');
 const User = require('../models/User');
+const features = require('../core/features');
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
@@ -18,7 +19,8 @@ exports.getLogin = (req, res) => {
     return res.redirect('/');
   }
   res.render('account/login', {
-    title: 'Login'
+    title: 'Login',
+    coreFeaturesEnabled:  features.coreFeaturesEnabled
   });
 };
 
@@ -122,7 +124,8 @@ exports.postSignup = (req, res, next) => {
  */
 exports.getAccount = (req, res) => {
   res.render('account/profile', {
-    title: 'Account Management'
+    title: 'Account Management',
+    coreFeaturesEnabled:  features.coreFeaturesEnabled
   });
 };
 
