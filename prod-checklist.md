@@ -18,8 +18,6 @@ If you are done with your hackathon and thinking about launching your project in
 ### Remove unused code and configs
 The following is a list of various codes that you may not potential be using and you could remove depending on your application:
 - Unused keys from .env file
-- /controllers/api.js entirely
-- /views/api entirely
 - app.js:
   - chalk usage
   - express-status-monitor

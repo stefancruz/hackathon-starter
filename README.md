@@ -43,10 +43,6 @@ if for example you are only interested in **Sign in with Google** authentication
 
 ![](https://lh5.googleusercontent.com/-oJ-7bSYisRY/U1a-WhK_LoI/AAAAAAAAECM/a04fVYgefzw/w1474-h1098-no/Screen+Shot+2014-04-22+at+3.08.33+PM.png)
 
-<h4 align="center">API Examples</h4>
-
-![](https://lh5.googleusercontent.com/-BJD2wK8CvC8/VLodBsyL-NI/AAAAAAAAEx0/SafE6o_qq_I/w1818-h1186-no/Screenshot%2B2015-01-17%2B00.25.49.png)
-
 Table of Contents
 -----------------
 
@@ -95,7 +91,6 @@ Features
  - Link multiple OAuth strategies to one account
  - Delete Account
 - CSRF protection
-- **API Examples**: Facebook, Foursquare, Last.fm, Tumblr, Twitter, Stripe, LinkedIn and more.
 
 Prerequisites
 -------------
