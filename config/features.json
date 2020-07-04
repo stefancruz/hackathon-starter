@@ -35,5 +35,9 @@
     {
         "id": "StatusPage",
         "enabled": false
+    },
+    {
+        "id": "GoogleAnalytics",
+        "enabled": false
     }
 ]
