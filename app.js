@@ -139,15 +139,17 @@ app.get('/login', userController.getLogin);
 
 if (features.coreFeaturesEnabled.BasicAuthentication) {
   app.post('/login', featuresEnabledMiddleware.isEnabled, userController.postLogin);
+
+  app.get('/forgot', userController.getForgot);
+  app.post('/forgot', userController.postForgot);
+
+  app.get('/reset/:token', userController.getReset);
+  app.post('/reset/:token', userController.postReset);
 }
 
 //TODO: other login strategies
 
 app.get('/logout', userController.logout);
-app.get('/forgot', userController.getForgot);
-app.post('/forgot', userController.postForgot);
-app.get('/reset/:token', userController.getReset);
-app.post('/reset/:token', userController.postReset);
 
 app.get('/signup', featuresEnabledMiddleware.isEnabled, userController.getSignup);
 app.post('/signup', featuresEnabledMiddleware.isEnabled, userController.postSignup);
