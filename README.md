@@ -6,7 +6,7 @@ Hackathon Starter
 
 **Live Demo**: https://hackathon-starter.walcony.com
 
-Jump to [What's new?](https://github.com/sahat/hackathon-starter/blob/master/CHANGELOG.md)
+Jump to [What's new?](https://github.com/templates-starter/hackathon-starter/blob/master/CHANGELOG.md)
 
 A boilerplate for **Node.js** web applications.
 
@@ -116,7 +116,7 @@ The easiest way to get started is to clone the repository:
 
 ```bash
 # Get the latest snapshot
-git clone https://github.com/sahat/hackathon-starter.git myproject
+git clone https://github.com/templates-starter/hackathon-starter.git myproject
 
 # Change directory
 cd myproject
@@ -1505,12 +1505,12 @@ Be sure to check out the full list of Watson services to forwarder enhance your 
 
 Production
 ---------
- If you are starting with this boilerplate to build an application for prod deployment, or if after your hackathon you would like to get your project hardened for production use, see [prod-checklist.md](https://github.com/sahat/hackathon-starter/blob/master/prod-checklist.md).
+ If you are starting with this boilerplate to build an application for prod deployment, or if after your hackathon you would like to get your project hardened for production use, see [prod-checklist.md](https://github.com/templates-starter/hackathon-starter/blob/master/prod-checklist.md).
 
 Changelog
 ---------
 
-You can find the changelog for the project in: [CHANGELOG.md](https://github.com/sahat/hackathon-starter/blob/master/CHANGELOG.md)
+You can find the changelog for the project in: [CHANGELOG.md](https://github.com/templates-starter/hackathon-starter/blob/master/CHANGELOG.md)
 
 
 Contributing
