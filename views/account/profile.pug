@@ -70,6 +70,10 @@ block content
   form(action='/account/password', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='currentPassword') Current Password
+      .col-md-7
+        input.form-control(type='password', name='currentPassword', id='currentPassword', autocomplete='currentPassword', minlength='8', required)
+    .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') New Password
       .col-md-7
         input.form-control(type='password', name='password', id='password', autocomplete='new-password', minlength='8', required)
