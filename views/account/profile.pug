@@ -25,15 +25,15 @@ block content
     <!-- Tab panes -->
     div.tab-content
 
-      div.tab-pane.active(id="profile", role="tabpanel", aria-labelledby="profile-tab")
+      div.tab-pane.active(id="profile" role="tabpanel" aria-labelledby="profile-tab")
         .pb-2.mt-2.mb-4.border-bottom
         h5 Profile
-        form.mt-2(action='/account/profile', method='POST')
-          input(type='hidden', name='_csrf', value=_csrf)
+        form.mt-2(action='/account/profile' method='POST')
+          input(type='hidden' name='_csrf', value=_csrf)
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
             .col-md-7
-              input.form-control(type='email', name='email', id='email', value=user.email, autocomplete='email', required)
+              input.form-control(type='email' name='email' id='email', value=user.email, autocomplete='email', required)
             .offset-sm-3.col-md-7.pl-3
               if user.emailVerified
                 .text-success.font-italic
@@ -45,90 +45,97 @@ block content
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
             .col-md-7
-              input.form-control(type='text', name='name', id='name', value=user.profile.name, autocomplete='name')
-          
+              input.form-control(type='text' name='name' id='name', value=user.profile.name, autocomplete='name')
+
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='biography') Biography
             .col-md-7
-              textarea.form-control(type='text', name='biography', id='biography', value=user.profile.biography, autocomplete='biography') #{user.profile.biography}
+              textarea.form-control(type='text' name='biography' id='biography', value=user.profile.biography, autocomplete='biography') #{user.profile.biography}
 
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='username') Username
             .col-md-7
-              input.form-control(type='text', name='username', id='username', value=user.profile.username, autocomplete='username')
+              input.form-control(type='text' name='username' id='username', value=user.profile.username, autocomplete='username')
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right Gender
             .col-sm-6
               .form-check.form-check-inline
-                input(type='radio', class='form-check-input' checked=user.profile.gender == 'male', name='gender', value='male', data-toggle='radio')
+                input(type='radio' class='form-check-input' checked=user.profile.gender == 'male' name='gender' value='male' data-toggle='radio')
                 label.form-check-label Male
 
               .form-check.form-check-inline
-                input(type='radio', class='form-check-input' checked=user.profile.gender == 'female', name='gender', value='female', data-toggle='radio')
+                input(type='radio' class='form-check-input' checked=user.profile.gender == 'female' name='gender' value='female' data-toggle='radio')
                 label.form-check-label Female
 
               .form-check.form-check-inline
-                input(type='radio', class='form-check-input' checked=user.profile.gender == 'other', name='gender', value='other', data-toggle='radio')
+                input(type='radio' class='form-check-input' checked=user.profile.gender == 'other' name='gender' value='other' data-toggle='radio')
                 label.form-check-label Other
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
             .col-md-7
-              input.form-control(type='text', name='location', id='location', value=user.profile.location, autocomplete)
+              input.form-control(type='text' name='location' id='location', value=user.profile.location, autocomplete)
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
             .col-md-7
-              input.form-control(type='text', placeholder="https://example.com", name='website', id='website', value=user.profile.website, autocomplete='url')
+              input.form-control(type='text' placeholder="https://example.com" name='website' id='website', value=user.profile.website, autocomplete='url')
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right Gravatar
             .col-sm-4
-              img(src=user.gravatar(), class='profile', width='100', height='100')
+              img(src=user.gravatar(), class='profile' width='100' height='100')
           .form-group
             .offset-sm-3.col-md-7.pl-2
               button.btn.btn.btn-primary(type='submit')
                 i.fas.fa-pencil-alt.fa-sm
                 | Update Profile                
-      
-      div.tab-pane(id="security", role="tabpanel", aria-labelledby="security-tab")
+
+      div.tab-pane(id="security" role="tabpanel" aria-labelledby="security-tab")
         .pb-2.mt-2.mb-4.border-bottom
         h5 Change Password
-
-        form(action='/account/password', method='POST')
-          input(type='hidden', name='_csrf', value=_csrf)
+        form(action='/account/password' method='POST')
+          input(type='hidden' name='_csrf', value=_csrf)
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='currentPassword') Current Password
             .col-md-7
-              input.form-control(type='password', name='currentPassword', id='currentPassword', autocomplete='currentPassword', minlength='8', required)
+              input.form-control(type='password' name='currentPassword' id='currentPassword' autocomplete='currentPassword' minlength='8', required)
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') New Password
             .col-md-7
-              input.form-control(type='password', name='password', id='password', autocomplete='new-password', minlength='8', required)
+              input.form-control(type='password' name='password' id='password' autocomplete='new-password' minlength='8', required)
           .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='confirmPassword') Confirm Password
             .col-md-7
-              input.form-control(type='password', name='confirmPassword', id='confirmPassword', autocomplete='new-password', minlength='8', required)
+              input.form-control(type='password' name='confirmPassword' id='confirmPassword' autocomplete='new-password' minlength='8', required)
           .form-group
             .offset-sm-3.col-md-7.pl-2
               button.btn.btn-primary(type='submit')
                 i.fas.fa-lock.fa-sm
                 | Change Password
 
-      div.tab-pane(id="danger", role="tabpanel", aria-labelledby="danger-tab")
+        .pb-2.mt-2.mb-4.border-bottom
+        h5 Two Factor Authentication
+        //- if user.totpEnabled
+        //- else
+        div
+          - var visible = false;
+          button(type="button", id="btnDisableTotp", class="btn btn-primary", onclick="disableTotp()", style = user.totpEnabled ? "": "display:none") Disable
+          button(type="button", id="btnEnableTotp", class="btn btn-primary", onclick="enableTotp()" style = !user.totpEnabled ? "" : "display:none") Enable
+
+      div.tab-pane(id="danger" role="tabpanel" aria-labelledby="danger-tab")
         .pb-2.mt-2.mb-4.border-bottom
         h5 Delete Account
 
-        form(action='/account/delete', method='POST', onsubmit="return confirm('Are you sure you want to delete your account?');")
+        form(action='/account/delete' method='POST' onsubmit="return confirm('Are you sure you want to delete your account?');")
           .form-group
             p.offset-sm-3.col-md-7.pl-2 You can delete your account, but keep in mind this action is irreversible.
-            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden' name='_csrf', value=_csrf)
             .offset-sm-3.col-md-7.pl-2
               button.btn.btn-danger(type='submit')
                 i.fas.fa-trash-alt.fa-sm
                 | Delete my account
-
       if coreFeaturesEnabled.SocialAuthentication
-        div.tab-pane(id="social", role="tabpanel", aria-labelledby="social-tab")
+        div.tab-pane(id="social" role="tabpanel" aria-labelledby="social-tab")
           .pb-2.mt-2.mb-4.border-bottom
-          h5 Linked Accounts
+          h Linked Accounts
           .form-group
             .offset-sm-3.col-md-7.pl-2
               if user.instagram
@@ -179,3 +186,58 @@ block content
                 p.mb-1: a.text-danger(href='/account/unlink/quickbooks') Unlink your QuickBooks account
               else
                 p.mb-1: a(href='/auth/quickbooks') Link your QuickBooks account
+
+    script.
+
+      function disableTotp(){
+        const _csrf = $('meta[name="csrf-token"]').attr('content');
+
+        const request = {
+          url: "/account/totp/disable",
+          data: { _csrf}
+        }
+
+        $.post(request, function(){
+          $("#btnDisableTotp").hide();
+          $("#btnEnableTotp").show();
+        })
+      }
+
+      function enableTotp(){
+
+        $.get( "/account/totp/qrcode", function( imageUrl ) {
+          Swal.fire({
+            //- title: 'Sweet!',
+            text: 'Enable Two Factor Authentication',
+            imageUrl,
+            imageWidth: 300,
+            imageHeight: 300,
+            imageAlt: 'Custom image',
+            input: 'text',
+            showCancelButton: true,
+            showConfirmButton: true,
+            preConfirm: function(userToken){
+              return new Promise((resolve, reject)=>{
+                const _csrf = $('meta[name="csrf-token"]').attr('content');
+
+                const request = {
+                  url: "/account/totp/verify",
+                  data: { _csrf, userToken }
+                }
+
+                $.post(request, function(response){
+                  resolve(response.success);
+                })
+
+              })
+            }
+          })
+          .then(function(result){
+
+            if(result.value){
+                $("#btnDisableTotp").show();
+                $("#btnEnableTotp").hide();
+            }
+          })  
+        })
+      }

@@ -5,6 +5,9 @@ const passport = require('passport');
 const _ = require('lodash');
 const validator = require('validator');
 const mailChecker = require('mailchecker');
+const squeakeasy = require('squeakeasy');
+const QRCode = require('qrcode');
+
 const User = require('../models/User');
 const features = require('../core/features');
 
@@ -45,12 +48,53 @@ exports.postLogin = (req, res, next) => {
       req.flash('errors', info);
       return res.redirect('/login');
     }
-    req.logIn(user, (err) => {
-      if (err) { return next(err); }
-      req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/');
-    });
+
+    if (user.totpEnabled) {
+      req.session.totpChallenge = true;
+      req.session.totpUserId = user._id;
+
+      req.logIn(user, (err) => {
+        return res.render('account/login', {
+          title: 'Login',
+          totp: user.totpEnabled,
+          coreFeaturesEnabled: features.coreFeaturesEnabled
+        });
+      });
+
+      // return res.render('account/login', {
+      //   title: 'Login',
+      //   totp: true,
+      //   coreFeaturesEnabled: features.coreFeaturesEnabled
+      // });
+    } else {
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        req.flash('success', { msg: 'Success! You are logged in.' });
+        res.redirect(req.session.returnTo || '/');
+      });
+    }
+
   })(req, res, next);
+};
+
+exports.totpLogin = (req, res) => {
+  
+  const token = req.body.token;
+
+  var success = squeakeasy.totp.verify(
+    {
+      secret: req.user.totpSecret,
+      encoding: ['base32'],
+      token
+    });
+
+  if (success) {
+    req.session.totpSecret = null;
+    req.session.totpChallenge = null;
+    return res.redirect('/');
+  } else {
+    return res.redirect('/account/login');
+  }
 };
 
 /**
@@ -132,6 +176,104 @@ exports.getAccount = (req, res) => {
     coreFeaturesEnabled: features.coreFeaturesEnabled
   });
 };
+
+
+exports.requestTotpCode = (req, res, next) => {
+
+  User.findById(req.user.id, (err, user) => {
+
+    if (err) { return next(err); }
+
+    const secret = squeakeasy.generateSecret({ length: 20 });
+
+    req.session.totpSecret = secret.ascii;
+
+    const url = squeakeasy.otpauthURL({ secret: secret.ascii, label: user.profile.username, issuer: 'ProjectName', algorithm: 'sha512' });
+
+    QRCode.toDataURL(url, function (err, data_url) {
+      res.send(data_url);
+    });
+
+  });
+
+}
+
+exports.verifyTotp = (req, res, next) => {
+
+  if (!req.user && !req.user.id) {
+    return res.send({ success: false });
+  }
+
+  User.findById(req.user.id, (err, user) => {
+
+    if (err) { return next(err); }
+
+    const userToken = req.body.userToken;
+
+    var success = squeakeasy.totp.verify(
+      {
+        secret: req.session.totpSecret,
+        encoding: ['base32'],
+        token: userToken
+      });
+
+    if (success) {
+      user.totpSecret = req.session.totpSecret;
+      user.totpEnabled = true;
+    }
+
+    req.session.totpSecret = null;
+
+    user.save(function () {
+      res.send({ success });
+    })
+
+
+  });
+
+}
+
+exports.disableTotp = (req, res, next) => {
+
+  // User.findById(req.user.id, (err, user) => {
+
+  //   if (err) { return next(err); }
+
+  //   const userToken = req.body.userToken;
+
+  //   var success = squeakeasy.totp.verify(
+  //     {
+  //       secret: user.totpSecret,
+  //       encoding: ['base32'],
+  //       token: userToken
+  //     });
+
+  //   if (success) {
+  //     user.totpSecret = undefined;
+  //     user.totpEnabled = false;
+  //   }
+
+  //   req.session.totpSecret = null;
+
+  //   user.save(function () {
+  //     res.send({ success });
+  //   })
+
+
+  // });
+  User.findById(req.user.id, (err, user) => {
+
+    if (err) { return next(err); }
+
+    user.totpSecret = undefined;
+    user.totpEnabled = false;
+
+    user.save(function () {
+      res.send({ success: true })
+    })
+
+  });
+}
 
 /**
  * POST /account/profile

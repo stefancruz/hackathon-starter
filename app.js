@@ -111,6 +111,15 @@ app.use((req, res, next) => {
 });
 app.use((req, res, next) => {
   // After successful login, redirect back to the intended page
+
+  if (req.path != '/account/totp/login' && req.path !== '/logout' && req.path !== '/login' && req.session && req.session.totpChallenge && !req.path.match(/\./)) {
+    return res.render('account/login', {
+      title: 'Login',
+      totp: true,
+      coreFeaturesEnabled: features.coreFeaturesEnabled
+    });
+  }
+
   if (!req.user
     && req.path !== '/login'
     && req.path !== '/signup'
@@ -128,6 +137,7 @@ app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/chart.js/di
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/popper.js/dist/umd'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
+app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/sweetalert2/dist'), { maxAge: 31557600000 }));
 app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts'), { maxAge: 31557600000 }));
 
 /**
@@ -162,6 +172,12 @@ app.get('/account/verify/:token', passportConfig.isAuthenticated, userController
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
+
+app.get('/account/totp/qrcode', passportConfig.isAuthenticated, userController.requestTotpCode);
+app.post('/account/totp/verify', passportConfig.isAuthenticated, userController.verifyTotp);
+app.post('/account/totp/disable', passportConfig.isAuthenticated, userController.disableTotp);
+app.post('/account/totp/login', passportConfig.isAuthenticated, userController.totpLogin);
+
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
