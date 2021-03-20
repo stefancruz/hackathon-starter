@@ -20,7 +20,6 @@ The following is a list of various codes that you may not potential be using and
 - Unused keys from .env file
 - app.js:
   - chalk usage
-  - express-status-monitor
   - multer
   - apiController
   - Openshift env references
@@ -33,7 +32,7 @@ The following is a list of various codes that you may not potential be using and
 - model/User.js
   - key pairs for Github, Instagram, LinkedIn, Steam
 - package.json
-  - @octokit/rest, chalk, clockwork, express-status-monitor, instagram-node, lastfm, lob, multer, node-foursquare, node-linkedin, passport-github, passport-instagram, passport-linkedin-oauth2, passport-oauth, passport-openid, paypal-rest-sdk, stripe, tumbler.js, twilio
+  - @octokit/rest, chalk, instagram-node, lastfm, lob, multer, node-foursquare, node-linkedin, passport-github, passport-instagram, passport-linkedin-oauth2, passport-oauth, passport-openid, paypal-rest-sdk, stripe, tumbler.js, twilio
 - /test/app.js
   - /api test case
 - views/account/login.pug

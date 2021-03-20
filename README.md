@@ -148,6 +148,17 @@ to obtain appropriate credentials: Client ID, Client Secret, API Key, or
 Username & Password. You will need to go through each provider to generate new
 credentials.
 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/RecaptchaLogo.svg/200px-RecaptchaLogo.svg.png" width="200">
+
+- Visit <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin Console</a>
+- Enter your application's name as the **Label**
+- Choose **reCAPTCHA v2**, **"I'm not a robot" Checkbox**
+- Enter *localhost* as the domain.  You can have other domains added in addition to *localhost*
+- Accept the terms and submit the form
+- Copy the *Site Key* and the *Secret key* into `.env`.  These keys will be accessible under Settings, reCAPTCHA keys drop down if you need them again later.
+
+<hr>
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1000px-Google_2015_logo.svg.png" width="200">
 
 - Visit <a href="https://cloud.google.com/console/project" target="_blank">Google Cloud Console</a>
@@ -331,9 +342,13 @@ The same goes for other providers.
 
 <img src="https://sendgrid.com/brand/sg-logo-300.png" width="200">
 
+You can use SendGrid for sending emails.  The developer tier allows you to send 100 free emails per day.  As an Alternative to SendGrid, you may also choose to use an SMTP service provider.  If using SendGrid:
 - Go to <a href="https://sendgrid.com/user/signup" target="_blank">https://sendgrid.com/user/signup</a>
 - Sign up and **confirm** your account via the *activation email*
-- Then enter your SendGrid *Username* and *Password* into `.env` file
+- Then enter your SendGrid *API Key* into `.env` file as SENDGRID_API_KEY
+
+If using an SMTP service provider instead of SendGrid:
+- Set SMTP_USER and SMTP_PASSWORD in `.env`, and remove SENDGRID_API_KEY
 
 <hr>
 
@@ -421,7 +436,6 @@ List of Packages
 | chai                            | BDD/TDD assertion library.                                              |
 | chalk                           | Terminal string styling done right.                                     |
 | cheerio                         | Scrape web pages using jQuery-style syntax.                             |
-| clockwork                       | Clockwork SMS API library.                                              |
 | compression                     | Node.js compression middleware.                                         |
 | connect-mongo                   | MongoDB session store for Express.                                      |
 | dotenv                          | Loads environment variables from .env file.                             |
@@ -433,8 +447,6 @@ List of Packages
 | express                         | Node.js web framework.                                                  |
 | express-flash                   | Provides flash messages for Express.                                    |
 | express-session                 | Simple session middleware for Express.                                  |
-| express-status-monitor          | Reports real-time server metrics for Express.                           |
-| fbgraph                         | Facebook Graph API library.                                             |
 | instagram-node                  | Instagram API library.                                                  |
 | lastfm                          | Last.fm API library.                                                    |
 | lob                             | Lob API library.                                                        |
@@ -472,7 +484,7 @@ List of Packages
 | supertest                       | HTTP assertion library.                                                 |
 | tumblr.js                       | Tumblr API library.                                                     |
 | twilio                          | Twilio API library.                                                     |
-| twit                            | Twitter API library.                                                    |
+| twitter-lite                    | Twitter API library.                                                    |
 | validator                       | A library of string validators and sanitizers.                          |
 
 Useful Tools and Resources
@@ -1308,7 +1320,7 @@ Please note that you may also use the [Herko Dashboard](https://dashboard.heroku
 - Fill in your information then hit **Get started free**
 - You will be redirected to Create New Cluster page.
 - Select a **Cloud Provider and Region** (such as AWS and a free tier region)
-- Select cluster Tier to **Free Shared Clusters**
+- Select cluster Tier to Free forever **Shared** Cluster
 - Give Cluster a name (default: Cluster0)
 - Click on green **:zap:Create Cluster button**
 - Now, to access your database you need to create a DB user. To create a new MongoDB user, from the **Clusters view**, select the **Security tab**
@@ -1317,7 +1329,7 @@ Please note that you may also use the [Herko Dashboard](https://dashboard.heroku
 - Next, you will need to create an IP address whitelist and obtain the connection URI.  In the Clusters view, under the cluster details (i.e. SANDBOX - Cluster0), click on the **CONNECT** button.
 - Under section **(1) Check the IP Whitelist**, click on **ALLOW ACCESS FROM ANYWHERE**. The form will add a field with `0.0.0.0/0`.  Click **SAVE** to save the `0.0.0.0/0` whitelist.
 - Under section **(2) Choose a connection method**, click on **Connect Your Application**
-- In the new screen, select **Node.js** as Driver and version **2.2.12 or later**. _*WARNING*_: Do not pick 3.0 or later since connect-mongo can't handle mongodb+srv:// connection strings.
+- In the new screen, select **Node.js** as Driver and version **3.6 or later**.
 - Finally, copy the URI connection string and replace the URI in MONGODB_URI of `.env.example` with this URI string.  Make sure to replace the <PASSWORD> with the db User password that you created under the Security tab.
 - Note that after some of the steps in the Atlas UI, you may see a banner stating `We are deploying your changes`.  You will need to wait for the deployment to finish before using the DB in your application.
 
@@ -1529,7 +1541,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2020 Sahat Yalkabov
+Copyright (c) 2014-2021 Sahat Yalkabov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
